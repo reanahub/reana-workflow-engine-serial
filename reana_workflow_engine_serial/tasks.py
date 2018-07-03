@@ -25,6 +25,7 @@ from __future__ import absolute_import, print_function
 import json
 import logging
 import os
+from requests.exceptions import ConnectionError
 from time import sleep
 
 import pika
@@ -49,6 +50,15 @@ def get_job_status(job_id):
     response, http_response = rjc_api_client.jobs.get_job(
         job_id=job_id).result()
     return response
+
+
+def _create_job(job):
+    """Call job controller to create a job."""
+    try:
+        return rjc_api_client.jobs.create_job(
+            job=job).result()
+    except ConnectionError:
+        _create_job(job)
 
 
 def escape_shell_arg(shell_arg):
@@ -102,8 +112,8 @@ def run_serial_workflow(workflow_uuid, workflow_workspace,
                 'job_type': 'kubernetes',
                 'shared_file_system': True,
             }
-            response, http_response = rjc_api_client.jobs.create_job(
-                job=job_spec).result()
+            response, http_response = _create_job(
+                job=job_spec)
             job_id = str(response['job_id'])
             print('~~~~~~ Publishing step:{0}, cmd: {1},'
                   ' total steps {2} to MQ'.
