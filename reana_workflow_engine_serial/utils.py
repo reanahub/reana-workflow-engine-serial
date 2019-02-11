@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018 CERN.
+# Copyright (C) 2018, 2019 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -55,7 +55,7 @@ def build_job_spec(image, command, workflow_workspace, mount_cvmfs):
                 workflow_workspace, escape_shell_arg(command)),
             "prettified_cmd": command,
             "workflow_workspace": workflow_workspace,
-            "job_name": command,
+            "job_name": command[:255],
             "cvmfs_mounts": []
     }
     if mount_cvmfs:
@@ -142,7 +142,7 @@ def publish_job_submission(step_number,
             step_number,
             command,
             len(workflow_json['steps']))
-        
+
     )
     running_jobs = {"total": 1, "job_ids": [job_id]}
 
