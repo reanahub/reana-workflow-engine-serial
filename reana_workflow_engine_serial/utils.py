@@ -47,8 +47,6 @@ def escape_shell_arg(shell_arg):
 
 def build_job_spec(image, command, workflow_workspace, workflow_uuid):
     """Build job specification to passed to RJC."""
-    import wdb
-    wdb.set_trace()
     job_spec = {
             "experiment": os.getenv("REANA_WORKFLOW_ENGINE_EXPERIMENT",
                                     "default"),
