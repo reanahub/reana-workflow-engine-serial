@@ -9,7 +9,7 @@ appdirs==1.4.4            # via fs
 attrs==22.1.0             # via jsonschema
 bravado-core==5.17.1      # via bravado
 bravado==10.3.2           # via reana-commons
-certifi==2022.9.24        # via requests
+certifi==2022.12.7        # via requests
 charset-normalizer==2.1.1  # via requests
 checksumdir==1.1.9        # via reana-commons
 click==8.1.3              # via reana-commons
