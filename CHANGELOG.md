@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.95.0](https://github.com/reanahub/reana-workflow-engine-serial/compare/0.9.3...0.95.0) (2024-03-18)
+
+
+### Continuous integration
+
+* **actions:** update GitHub actions due to Node 16 deprecation ([#204](https://github.com/reanahub/reana-workflow-engine-serial/issues/204)) ([8ca85c0](https://github.com/reanahub/reana-workflow-engine-serial/commit/8ca85c0b85a93b60d6202ebdd8ac955bb635a1a9))
+
+
+### Chores
+
+* **master:** release 0.95.0-alpha.1 ([5d34691](https://github.com/reanahub/reana-workflow-engine-serial/commit/5d34691ed5fde8d38720b742bd9921cd52b7fa0e))
+
 ## [0.9.3](https://github.com/reanahub/reana-workflow-engine-serial/compare/0.9.2...0.9.3) (2024-03-04)
 
 
