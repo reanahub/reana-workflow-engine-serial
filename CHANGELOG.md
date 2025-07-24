@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [0.9.5](https://github.com/reanahub/reana-workflow-engine-serial/compare/0.9.4...0.9.5) (2025-07-24)
+
+
+### Continuous integration
+
+* **commitlint:** fix local running of commit linter on macOS ([#229](https://github.com/reanahub/reana-workflow-engine-serial/issues/229)) ([f32aafd](https://github.com/reanahub/reana-workflow-engine-serial/commit/f32aafd9b482aa996f97f3bfc2131c872611016c))
+* **jsonlint:** add JSON linting ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([fe84cbc](https://github.com/reanahub/reana-workflow-engine-serial/commit/fe84cbc4da343e72de1f504a919981dd34677f82))
+* **markdownlint:** add Markdown linting ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([ddebde0](https://github.com/reanahub/reana-workflow-engine-serial/commit/ddebde02dffc23f240847f51e065b4d07ceb7767))
+* **prettier:** add Prettier code formatting checks ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([acb707f](https://github.com/reanahub/reana-workflow-engine-serial/commit/acb707fb27c8ea4884d39af4f8d2500986213ab8))
+* **shfmt:** add shell script formatting checks ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([5cf4b26](https://github.com/reanahub/reana-workflow-engine-serial/commit/5cf4b269f54dd9c89a7cd653f896255b3c19dc10))
+* **yamllint:** add YAML linting ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([11fa9b8](https://github.com/reanahub/reana-workflow-engine-serial/commit/11fa9b8dde3ab0ab88ab632da8b7a803ec408f97))
+
 ## [0.9.4](https://github.com/reanahub/reana-workflow-engine-serial/compare/0.9.3...0.9.4) (2024-11-29)
 
 
