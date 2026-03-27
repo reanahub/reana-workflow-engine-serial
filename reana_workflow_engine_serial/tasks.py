@@ -120,6 +120,7 @@ def run_step(
             kubernetes_cpu_limit=step.get("kubernetes_cpu_limit"),
             kubernetes_memory_request=step.get("kubernetes_memory_request"),
             kubernetes_memory_limit=step.get("kubernetes_memory_limit"),
+            kubernetes_queue=step.get("kubernetes_queue"),
             kubernetes_job_timeout=step.get("kubernetes_job_timeout"),
             voms_proxy=step.get("voms_proxy", False),
             rucio=step.get("rucio", False),
