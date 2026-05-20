@@ -114,7 +114,8 @@ def run_step(
             workflow_workspace=workflow_workspace,
             workflow_uuid=workflow_uuid,
             kerberos=step.get("kerberos", WORKFLOW_KERBEROS),
-            unpacked_image=step.get("unpacked_image", False),
+            # Keep backwards compatibility for steps still using `unpacked_image`
+            unpacked_img=step.get("unpacked_img", step.get("unpacked_image", False)),
             kubernetes_uid=step.get("kubernetes_uid"),
             kubernetes_cpu_request=step.get("kubernetes_cpu_request"),
             kubernetes_cpu_limit=step.get("kubernetes_cpu_limit"),
