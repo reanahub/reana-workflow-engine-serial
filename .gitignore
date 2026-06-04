@@ -68,3 +68,6 @@ target/
 # IntelliJ project files
 .idea
 *.iml
+
+# REANA modules for local development
+modules/
