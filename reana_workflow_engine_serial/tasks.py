@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # This file is part of REANA.
-# Copyright (C) 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025 CERN.
+# Copyright (C) 2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026 CERN.
 #
 # REANA is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -126,6 +126,10 @@ def run_step(
             rucio=step.get("rucio", False),
             htcondor_max_runtime=step.get("htcondor_max_runtime", ""),
             htcondor_accounting_group=step.get("htcondor_accounting_group", ""),
+            htcondor_request_cpus=step.get("htcondor_request_cpus", ""),
+            htcondor_request_memory=step.get("htcondor_request_memory", ""),
+            htcondor_request_disk=step.get("htcondor_request_disk", ""),
+            htcondor_requirements=step.get("htcondor_requirements", ""),
             slurm_partition=step.get("slurm_partition"),
             slurm_time=step.get("slurm_time"),
             c4p_cpu_cores=step.get("c4p_cpu_cores"),
