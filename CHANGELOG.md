@@ -2,6 +2,51 @@
 
 # Changelog
 
+## [0.9.5](https://github.com/reanahub/reana-workflow-engine-serial/compare/0.9.4...0.9.5) (2026-06-07)
+
+
+### Build
+
+* **python:** pin setuptools below 81 ([#240](https://github.com/reanahub/reana-workflow-engine-serial/issues/240)) ([ef9134c](https://github.com/reanahub/reana-workflow-engine-serial/commit/ef9134ceca0e01039b150975f33eb6b5bbb81621))
+
+
+### Features
+
+* **tasks:** pass HTCondor CPU/memory/disk/requirements hints ([#246](https://github.com/reanahub/reana-workflow-engine-serial/issues/246)) ([9bb5a68](https://github.com/reanahub/reana-workflow-engine-serial/commit/9bb5a688fe50227f99ff7eaefdbb484e63d8f602))
+* **tasks:** pass K8S requests/limits to job controller ([#221](https://github.com/reanahub/reana-workflow-engine-serial/issues/221)) ([31bc971](https://github.com/reanahub/reana-workflow-engine-serial/commit/31bc9714c578e820f7631e095af436ed22e07c37))
+* **tasks:** pass K8S requests/limits to job controller ([#221](https://github.com/reanahub/reana-workflow-engine-serial/issues/221)) ([9c02478](https://github.com/reanahub/reana-workflow-engine-serial/commit/9c02478c32a2d340b9ef9f3ee65c1781856a3155))
+
+
+### Bug fixes
+
+* **config:** use glob for egg-info in flake8 exclude ([#226](https://github.com/reanahub/reana-workflow-engine-serial/issues/226)) ([415db85](https://github.com/reanahub/reana-workflow-engine-serial/commit/415db85b4b777ab9b04bb51832fc3bf80151ae23))
+* **git:** update .gitignore to exclude modules directory ([#245](https://github.com/reanahub/reana-workflow-engine-serial/issues/245)) ([bcb867b](https://github.com/reanahub/reana-workflow-engine-serial/commit/bcb867bce5581b1d61c3f4cbf029bc9e0d61425f))
+* **tasks:** read unpacked_img in serial job spec ([#244](https://github.com/reanahub/reana-workflow-engine-serial/issues/244)) ([753d2c9](https://github.com/reanahub/reana-workflow-engine-serial/commit/753d2c9457cdfa0ef3058d09fa60c4a529cf9682))
+
+
+### Code refactoring
+
+* **pytest:** drop pytest-reana for reana-commons[tests] ([#243](https://github.com/reanahub/reana-workflow-engine-serial/issues/243)) ([8058c14](https://github.com/reanahub/reana-workflow-engine-serial/commit/8058c14c76f74265f43173a7e05e7bc2a129e8a8))
+
+
+### Continuous integration
+
+* **commitlint:** fix local running of commit linter on macOS ([#229](https://github.com/reanahub/reana-workflow-engine-serial/issues/229)) ([f32aafd](https://github.com/reanahub/reana-workflow-engine-serial/commit/f32aafd9b482aa996f97f3bfc2131c872611016c))
+* **jsonlint:** add JSON linting ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([fe84cbc](https://github.com/reanahub/reana-workflow-engine-serial/commit/fe84cbc4da343e72de1f504a919981dd34677f82))
+* **markdownlint:** add Markdown linting ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([ddebde0](https://github.com/reanahub/reana-workflow-engine-serial/commit/ddebde02dffc23f240847f51e065b4d07ceb7767))
+* **markdownlint:** less permissive global configuration ([#241](https://github.com/reanahub/reana-workflow-engine-serial/issues/241)) ([9384953](https://github.com/reanahub/reana-workflow-engine-serial/commit/938495322d7733a529ce0e5c31852b4b24c91c5b))
+* **prettier:** add Prettier code formatting checks ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([acb707f](https://github.com/reanahub/reana-workflow-engine-serial/commit/acb707fb27c8ea4884d39af4f8d2500986213ab8))
+* **run-tests:** add usage help and refactor options ([#241](https://github.com/reanahub/reana-workflow-engine-serial/issues/241)) ([1ea1c3d](https://github.com/reanahub/reana-workflow-engine-serial/commit/1ea1c3d977390a36d8a7f1ce93bc96cc56dc43a8))
+* **runners:** upgrade CI runners to Ubuntu 22.04 ([#224](https://github.com/reanahub/reana-workflow-engine-serial/issues/224)) ([31bc971](https://github.com/reanahub/reana-workflow-engine-serial/commit/31bc9714c578e820f7631e095af436ed22e07c37))
+* **runners:** upgrade CI runners to Ubuntu 22.04 ([#224](https://github.com/reanahub/reana-workflow-engine-serial/issues/224)) ([1ff9187](https://github.com/reanahub/reana-workflow-engine-serial/commit/1ff9187016a404aa37d06b32ea61ef17f3767b01))
+* **shfmt:** add shell script formatting checks ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([5cf4b26](https://github.com/reanahub/reana-workflow-engine-serial/commit/5cf4b269f54dd9c89a7cd653f896255b3c19dc10))
+* **yamllint:** add YAML linting ([#231](https://github.com/reanahub/reana-workflow-engine-serial/issues/231)) ([11fa9b8](https://github.com/reanahub/reana-workflow-engine-serial/commit/11fa9b8dde3ab0ab88ab632da8b7a803ec408f97))
+
+
+### Documentation
+
+* **authors:** complete list of contributors ([#232](https://github.com/reanahub/reana-workflow-engine-serial/issues/232)) ([edd0a08](https://github.com/reanahub/reana-workflow-engine-serial/commit/edd0a085645642e6fb9b77bf86439788d56cffa6))
+
 ## [0.9.4](https://github.com/reanahub/reana-workflow-engine-serial/compare/0.9.3...0.9.4) (2024-11-29)
 
 
