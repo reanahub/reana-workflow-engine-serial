@@ -31,7 +31,7 @@ extras_require = {
         "Jinja2<3.1",
     ],
     "tests": [
-        "reana-commons[tests]>=0.95.0a16,<0.96.0",
+        "reana-commons[tests]>=0.95.0a20,<0.96.0",
     ],
 }
 
@@ -42,7 +42,7 @@ for key, reqs in extras_require.items():
     extras_require["all"].extend(reqs)
 
 install_requires = [
-    "reana-commons>=0.95.0a16,<0.96.0",
+    "reana-commons>=0.95.0a20,<0.96.0",
 ]
 
 packages = find_packages()
