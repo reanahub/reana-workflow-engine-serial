@@ -133,7 +133,10 @@ def run_step(
             slurm_partition=step.get("slurm_partition"),
             slurm_time=step.get("slurm_time"),
             c4p_cpu_cores=step.get("c4p_cpu_cores"),
+            c4p_request_gpus=step.get("c4p_request_gpus"),
             c4p_memory_limit=step.get("c4p_memory_limit"),
+            c4p_notification=step.get("c4p_notification"),
+            c4p_email_address=step.get("c4p_email_address"),
             c4p_additional_requirements=step.get("c4p_additional_requirements"),
         )
         job_spec_copy = dict(job_spec)
