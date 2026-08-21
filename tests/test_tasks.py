@@ -63,3 +63,59 @@ def test_run_step_unpacked_img_mapping(step_extra, expected):
         )
 
     assert mock_build.call_args.kwargs["unpacked_img"] == expected
+
+
+@pytest.mark.parametrize(
+    "step_secret_names,workflow_secret_names,expected_secret_names",
+    [
+        (None, None, None),
+        (None, ["global"], ["global"]),
+        ([], ["global"], []),
+        (["local"], ["global"], ["local"]),
+    ],
+)
+def test_run_step_secret_names_resolution(
+    step_secret_names, workflow_secret_names, expected_secret_names
+):
+    """Test that step-local secret_names override or inherit workflow defaults."""
+    step = {
+        "environment": "busybox",
+        "commands": ["echo test"],
+    }
+    if step_secret_names is not None:
+        step["secret_names"] = step_secret_names
+    workflow_json = {"steps": [step]}
+    workflow_resources = {}
+    if workflow_secret_names is not None:
+        workflow_resources["secret_names"] = workflow_secret_names
+
+    job_status = MagicMock()
+    job_status.status = "finished"
+
+    with (
+        patch("reana_workflow_engine_serial.tasks.build_job_spec") as mock_build,
+        patch(
+            "reana_workflow_engine_serial.tasks.poll_job_status",
+            return_value=job_status,
+        ),
+        patch("reana_workflow_engine_serial.tasks.publish_job_submission"),
+        patch("reana_workflow_engine_serial.tasks.publish_job_success"),
+    ):
+        mock_build.return_value = {}
+        rjc_client = MagicMock()
+        rjc_client.submit.return_value = {"job_id": "test-id"}
+
+        run_step(
+            rjc_api_client=rjc_client,
+            step_number=0,
+            step=step,
+            workflow_workspace="/workspace",
+            cache_enabled=False,
+            expanded_workflow_json=workflow_json,
+            workflow_json=workflow_json,
+            workflow_resources=workflow_resources,
+            publisher=MagicMock(),
+            workflow_uuid="test-uuid",
+        )
+
+    assert mock_build.call_args.kwargs["secret_names"] == expected_secret_names
