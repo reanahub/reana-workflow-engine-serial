@@ -55,7 +55,6 @@ def test_run_step_unpacked_img_mapping(step_extra, expected):
             step_number=0,
             step=step,
             workflow_workspace="/workspace",
-            cache_enabled=False,
             expanded_workflow_json=workflow_json,
             workflow_json=workflow_json,
             publisher=MagicMock(),

@@ -11,21 +11,15 @@
 from __future__ import absolute_import, print_function
 
 import logging
-import os
-
 from reana_commons.config import REANA_LOG_FORMAT, REANA_LOG_LEVEL
 from reana_commons.serial import serial_load
 from reana_commons.workflow_engine import create_workflow_engine_command
 
-from .config import CACHE_ENABLED, WORKFLOW_KERBEROS
+from .config import WORKFLOW_KERBEROS
 from .utils import (
     build_job_spec,
-    check_cache,
-    copy_workspace_from_cache,
-    copy_workspace_to_cache,
     get_targeted_workflow_steps,
     poll_job_status,
-    publish_cache_copy,
     publish_job_submission,
     publish_job_success,
     publish_workflow_failure,
@@ -33,26 +27,12 @@ from .utils import (
 )
 
 
-def initialize(workflow_workspace, operational_options):
+def initialize(workflow_workspace):
     """Initialize engine."""
     # configure the logger
     logging.basicConfig(level=REANA_LOG_LEVEL, format=REANA_LOG_FORMAT)
 
-    # set cache on or off
-    if not operational_options:
-        operational_options = {}
-    if CACHE_ENABLED:
-        if (
-            "CACHE" not in operational_options
-            or operational_options.get("CACHE", "").lower() != "off"
-        ):
-            cache_enabled = True
-        else:
-            cache_enabled = False
-    else:
-        cache_enabled = False
-
-    return workflow_workspace, cache_enabled
+    return workflow_workspace
 
 
 def run(
@@ -63,7 +43,6 @@ def run(
     operational_options,
     workflow_uuid,
     workflow_workspace,
-    cache_enabled,
 ):
     """Run a serial workflow."""
     operational_options = operational_options or {}
@@ -83,7 +62,6 @@ def run(
             step_number,
             step,
             workflow_workspace,
-            cache_enabled,
             expanded_workflow_json,
             workflow_json,
             publisher,
@@ -98,7 +76,6 @@ def run_step(
     step_number,
     step,
     workflow_workspace,
-    cache_enabled,
     expanded_workflow_json,
     workflow_json,
     publisher,
@@ -136,30 +113,6 @@ def run_step(
             c4p_memory_limit=step.get("c4p_memory_limit"),
             c4p_additional_requirements=step.get("c4p_additional_requirements"),
         )
-        job_spec_copy = dict(job_spec)
-        job_spec_copy["cmd"] = command
-
-        if cache_enabled:
-            cached_info = check_cache(
-                rjc_api_client, job_spec_copy, step, workflow_workspace
-            )
-            if (
-                cached_info.get("result_path")
-                and os.path.exists(cached_info.get("result_path"))
-                and os.listdir(cached_info.get("result_path"))
-            ):
-                copy_workspace_from_cache(
-                    cached_info["result_path"], workflow_workspace
-                )
-                publish_cache_copy(
-                    cached_info["job_id"],
-                    step,
-                    expanded_workflow_json,
-                    command,
-                    publisher,
-                    workflow_uuid,
-                )
-                continue
         response = rjc_api_client.submit(**job_spec)
         job_id = str(response["job_id"])
         publish_job_submission(
@@ -168,20 +121,13 @@ def run_step(
 
         job_status = poll_job_status(rjc_api_client, job_id)
         if job_status.status == "finished":
-            cache_dir_path = None
-            if cache_enabled:
-                cache_dir_path = copy_workspace_to_cache(job_id, workflow_workspace)
-
             publish_job_success(
                 job_id,
-                job_spec,
-                workflow_workspace,
                 expanded_workflow_json,
                 step,
                 command,
                 publisher,
                 workflow_uuid,
-                cache_dir_path=cache_dir_path,
             )
         else:
             publish_workflow_failure(job_id, workflow_uuid, publisher)
@@ -200,10 +146,7 @@ def run_serial_workflow_engine_adapter(
     **kwargs
 ):
     """Run a serial workflow."""
-    (
-        workflow_workspace,
-        cache_enabled,
-    ) = initialize(workflow_workspace, operational_options)
+    workflow_workspace = initialize(workflow_workspace)
 
     run(
         publisher,
@@ -213,7 +156,6 @@ def run_serial_workflow_engine_adapter(
         operational_options,
         workflow_uuid,
         workflow_workspace,
-        cache_enabled,
     )
 
 
