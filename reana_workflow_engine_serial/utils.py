@@ -47,7 +47,6 @@ def build_job_spec(
     c4p_request_gpus,
     c4p_memory_limit,
     c4p_notification,
-    c4p_email_address,
     c4p_additional_requirements,
 ):
     """Build job specification to passed to RJC."""
@@ -82,7 +81,6 @@ def build_job_spec(
         "c4p_request_gpus": c4p_request_gpus,
         "c4p_memory_limit": c4p_memory_limit,
         "c4p_notification": c4p_notification,
-        "c4p_email_address": c4p_email_address,
         "c4p_additional_requirements": c4p_additional_requirements,
     }
     return job_spec

@@ -136,7 +136,6 @@ def run_step(
             c4p_request_gpus=step.get("c4p_request_gpus"),
             c4p_memory_limit=step.get("c4p_memory_limit"),
             c4p_notification=step.get("c4p_notification"),
-            c4p_email_address=step.get("c4p_email_address"),
             c4p_additional_requirements=step.get("c4p_additional_requirements"),
         )
         job_spec_copy = dict(job_spec)
