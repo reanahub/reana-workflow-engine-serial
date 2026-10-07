@@ -14,8 +14,10 @@ import logging
 import os
 
 from reana_commons.config import REANA_LOG_FORMAT, REANA_LOG_LEVEL
+from reana_commons.k8s.secrets import resolve_secret_names
 from reana_commons.serial import serial_load
 from reana_commons.workflow_engine import create_workflow_engine_command
+
 
 from .config import CACHE_ENABLED, WORKFLOW_KERBEROS
 from .utils import (
@@ -64,6 +66,7 @@ def run(
     workflow_uuid,
     workflow_workspace,
     cache_enabled,
+    workflow_resources=None,
 ):
     """Run a serial workflow."""
     operational_options = operational_options or {}
@@ -88,6 +91,7 @@ def run(
             workflow_json,
             publisher,
             workflow_uuid,
+            workflow_resources,
         )
         if status != "finished":
             break
@@ -103,6 +107,7 @@ def run_step(
     workflow_json,
     publisher,
     workflow_uuid,
+    workflow_resources=None,
 ):
     """Run a step of a serial workflow."""
     for command in step["commands"]:
@@ -124,6 +129,9 @@ def run_step(
             kubernetes_job_timeout=step.get("kubernetes_job_timeout"),
             voms_proxy=step.get("voms_proxy", False),
             rucio=step.get("rucio", False),
+            secret_names=resolve_secret_names(
+                step.get("secret_names"), workflow_resources
+            ),
             htcondor_max_runtime=step.get("htcondor_max_runtime", ""),
             htcondor_accounting_group=step.get("htcondor_accounting_group", ""),
             htcondor_request_cpus=step.get("htcondor_request_cpus", ""),
@@ -197,6 +205,7 @@ def run_serial_workflow_engine_adapter(
     workflow_workspace=None,
     workflow_parameters=None,
     operational_options=None,
+    workflow_resources=None,
     **kwargs
 ):
     """Run a serial workflow."""
@@ -214,6 +223,7 @@ def run_serial_workflow_engine_adapter(
         workflow_uuid,
         workflow_workspace,
         cache_enabled,
+        workflow_resources=workflow_resources,
     )
 
 
