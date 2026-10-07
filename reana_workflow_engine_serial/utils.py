@@ -44,7 +44,9 @@ def build_job_spec(
     slurm_partition,
     slurm_time,
     c4p_cpu_cores,
+    c4p_gpu_count,
     c4p_memory_limit,
+    c4p_notification,
     c4p_additional_requirements,
 ):
     """Build job specification to passed to RJC."""
@@ -76,7 +78,9 @@ def build_job_spec(
         "slurm_partition": slurm_partition,
         "slurm_time": slurm_time,
         "c4p_cpu_cores": c4p_cpu_cores,
+        "c4p_gpu_count": c4p_gpu_count,
         "c4p_memory_limit": c4p_memory_limit,
+        "c4p_notification": c4p_notification,
         "c4p_additional_requirements": c4p_additional_requirements,
     }
     return job_spec
