@@ -9,11 +9,9 @@
 """REANA-Workflow-Engine-Serial utilities."""
 
 import logging
-import os
-from distutils.dir_util import copy_tree
 from time import sleep
 
-from reana_commons.utils import build_caching_info_message, build_progress_message
+from reana_commons.utils import build_progress_message
 
 from .config import JOB_STATUS_POLLING_INTERVAL, MOUNT_CVMFS
 
@@ -82,64 +80,6 @@ def build_job_spec(
     return job_spec
 
 
-def check_cache(rjc_api_client, job_spec_copy, step, workflow_workspace):
-    """Check if job exists in cache."""
-    http_response = rjc_api_client.check_if_cached(
-        job_spec_copy, step, workflow_workspace
-    )
-    result = http_response.json()
-    if result["cached"]:
-        return result
-    return {}
-
-
-def copy_workspace_from_cache(result_path, workflow_workspace):
-    """Restore workspace contents from cache."""
-    os.system(
-        "cp -R {source} {dest}".format(
-            source=os.path.join(result_path, "*"), dest=workflow_workspace
-        )
-    )
-
-
-def copy_workspace_to_cache(job_id, workflow_workspace):
-    """Copy workspace contents to cache."""
-    logging.info("Caching result to ../archive/{}".format(job_id))
-    logging.info("workflow_workspace: {}".format(workflow_workspace))
-
-    # Create the cache directory if it doesn't exist
-    cache_dir_path = os.path.abspath(
-        os.path.join(workflow_workspace, os.pardir, "archive", job_id)
-    )
-    logging.info("cache_dir_path: {}".format(cache_dir_path))
-    os.makedirs(cache_dir_path)
-
-    # Copy workspace contents to cache directory
-    copy_tree(workflow_workspace, cache_dir_path)
-    return cache_dir_path
-
-
-def publish_cache_copy(
-    job_id, step, expanded_workflow_json, command, publisher, workflow_uuid
-):
-    """Publish to MQ the cache hit."""
-    logging.info("Copied from cache")
-    if step == expanded_workflow_json["steps"][-1] and command == step["commands"][-1]:
-        workflow_status = 2
-    else:
-        workflow_status = 1
-    finished_jobs = {"total": 1, "job_ids": [job_id]}
-    publisher.publish_workflow_status(
-        workflow_uuid,
-        workflow_status,
-        message={
-            "progress": build_progress_message(
-                finished=finished_jobs, cached=finished_jobs
-            )
-        },
-    )
-
-
 def publish_job_submission(
     step_number, command, workflow_json, job_id, publisher, workflow_uuid
 ):
@@ -172,14 +112,11 @@ def poll_job_status(rjc_api_client, job_id):
 
 def publish_job_success(
     job_id,
-    job_spec,
-    workflow_workspace,
     expanded_workflow_json,
     step,
     command,
     publisher,
     workflow_uuid,
-    cache_dir_path=None,
 ):
     """Publish to MQ the job success."""
     finished_jobs = {"total": 1, "job_ids": [job_id]}
@@ -188,12 +125,7 @@ def publish_job_success(
     else:
         workflow_status = 1
 
-    message = {}
-    message["progress"] = build_progress_message(finished=finished_jobs)
-    if cache_dir_path:
-        message["caching_info"] = build_caching_info_message(
-            job_spec, job_id, workflow_workspace, step, cache_dir_path
-        )
+    message = {"progress": build_progress_message(finished=finished_jobs)}
     publisher.publish_workflow_status(workflow_uuid, workflow_status, message=message)
 
 

@@ -16,7 +16,6 @@ instantiating, executing and managing simple sequential computational workflows.
 ## Features
 
 - Run sequential workflows consisting of Bash commands.
-- Cache workflow steps by default to shorten computation time.
 
 ## Usage
 
